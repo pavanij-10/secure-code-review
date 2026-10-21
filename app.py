@@ -9,12 +9,18 @@ from review import review_file
 from report import generate_html_report
 
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 1 * 1024 * 1024
 app.secret_key = os.environ.get(
     "FLASK_SECRET_KEY",
     "local-development-key-change-before-deployment"
 )
-app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
-
+@app.errorhandler(413)
+def file_too_large(error):
+    return render_template(
+        "index.html",
+        findings=[],
+        error="File is too large. Maximum upload size is 1 MB."
+    ), 413
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -79,3 +85,5 @@ def download_report():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+ 

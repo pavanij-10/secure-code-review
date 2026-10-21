@@ -78,4 +78,21 @@ def test_successful_upload_and_report_download():
 
     assert download_response.status_code == 200
     assert b"test_sample.py" in download_response.data
+def test_oversized_upload_is_rejected():
+    app_module.app.config["TESTING"] = True
+    app_module.app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
+    client = app_module.app.test_client()
 
+    response = client.post(
+        "/",
+        data={
+            "code_file": (
+                io.BytesIO(b"A" * (1024 * 1024 + 1)),
+                "large_sample.py"
+            )
+        },
+        content_type="multipart/form-data"
+    )
+
+    assert response.status_code == 413
+    assert b"File is too large" in response.data
