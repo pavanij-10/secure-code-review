@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure Code Review Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #202938;
+        }
+        h1 { color: #163a63; }
+        form, .finding {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #d8dee8;
+            border-radius: 8px;
+        }
+        button {
+            background: #163a63;
+            color: white;
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error { color: #b42318; }
+        .HIGH, .CRITICAL { color: #b42318; font-weight: bold; }
+        .MEDIUM { color: #9a6700; font-weight: bold; }
+        .LOW { color: #276749; font-weight: bold; }
+        code { overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+    <h1>Secure Code Review Assistant</h1>
+    <p>Upload a Python source file to scan for potential security issues.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="code_file" accept=".py" required>
+        <button type="submit">Review Code</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if findings %}
+        <h2>Review Results — {{ findings|length }} findings</h2>
+
+        {% for finding in findings %}
+            <section class="finding">
+                <h3>{{ finding.title }}</h3>
+                <p><strong>Severity:</strong>
+                    <span class="{{ finding.severity }}">
+                        {{ finding.severity }}
+                    </span>
+                </p>
+                <p><strong>Line:</strong> {{ finding.line }}</p>
+                <p><strong>Issue:</strong> {{ finding.issue }}</p>
+                <p><strong>Risk:</strong> {{ finding.risk }}</p>
+                <p><strong>Recommendation:</strong>
+                    {{ finding.recommendation }}
+                </p>
+                {% if finding.reference %}
+                    <p><strong>Reference:</strong>
+                        <a href="{{ finding.reference }}" target="_blank"
+                           rel="noopener noreferrer">Read guidance</a>
+                    </p>
+                {% endif %}
+            </section>
+        {% endfor %}
+
+        <a href="{{ url_for('download_report') }}">
+            <button type="button">Download HTML Report</button>
+        </a>
+    {% endif %}
+</body>
+</html>
