@@ -239,6 +239,12 @@ Here is a preview of the Secure Code Review Assistant homepage.
 
 ![Secure Code Review Assistant homepage](screenshots/homepage.png)
 
+## 🔍 Example Security Scan
+
+The tool identified three findings in the intentionally vulnerable sample: a high-severity shell-injection issue, a possible hardcoded password, and an informational subprocess-import finding.
+
+![Security scan results showing three findings](screenshots/vulnerable-scan.png)
+
 ## 🧪 Test Evidence
 
 The project includes automated tests for the scanner, security explanations, review logic, and web application.
