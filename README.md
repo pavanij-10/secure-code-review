@@ -233,6 +233,11 @@ This tool supports learning and preliminary review. It does not guarantee that c
   <strong>Built to make secure coding easier to understand. 💙</strong>
 </p>
 
+## 🖥️ Application Preview
+
+Here is a preview of the Secure Code Review Assistant homepage.
+
+![Secure Code Review Assistant homepage](screenshots/homepage.png)
 
 ## 🧪 Test Evidence
 
