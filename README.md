@@ -232,3 +232,12 @@ This tool supports learning and preliminary review. It does not guarantee that c
 <p align="center">
   <strong>Built to make secure coding easier to understand. 💙</strong>
 </p>
+
+
+## 🧪 Test Evidence
+
+The project includes automated tests for the scanner, security explanations, review logic, and web application.
+
+**Latest test result: 17 passed**
+
+![Pytest results showing 17 passing tests](screenshots/tests-passed.png)
